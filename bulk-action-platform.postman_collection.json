@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "Bulk Action Platform",
+    "description": "API collection for the Bulk Action Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List Bulk Actions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/bulk-actions?accountId={{accountId}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bulk-actions"],
+          "query": [
+            {
+              "key": "accountId",
+              "value": "{{accountId}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Bulk Action",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountId\": \"{{accountId}}\",\n  \"entityIds\": [\"{{entityId1}}\", \"{{entityId2}}\"],\n  \"fieldsToUpdate\": {\n    \"name\": \"Updated Name\",\n    \"email\": \"updated@example.com\",\n    \"status\": \"active\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/bulk-actions",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bulk-actions"]
+        }
+      }
+    },
+    {
+      "name": "Get Bulk Action Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bulk-actions", "{{actionId}}"]
+        }
+      }
+    },
+    {
+      "name": "Get Bulk Action Statistics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}/stats",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bulk-actions", "{{actionId}}", "stats"]
+        }
+      }
+    },
+    {
+      "name": "Get Bulk Action Logs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}/logs?page=1&limit=50",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bulk-actions", "{{actionId}}", "logs"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "accountId",
+      "value": "your-account-id"
+    },
+    {
+      "key": "actionId",
+      "value": "your-action-id"
+    },
+    {
+      "key": "entityId1",
+      "value": "entity-id-1"
+    },
+    {
+      "key": "entityId2",
+      "value": "entity-id-2"
+    }
+  ]
+} 
