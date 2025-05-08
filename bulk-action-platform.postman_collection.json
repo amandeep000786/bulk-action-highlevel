@@ -1,116 +1,524 @@
 {
   "info": {
+    "_postman_id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
     "name": "Bulk Action Platform",
-    "description": "API collection for the Bulk Action Platform",
+    "description": "Collection of APIs for the Bulk Action Platform",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "List Bulk Actions",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/api/bulk-actions?accountId={{accountId}}",
-          "host": ["{{base_url}}"],
-          "path": ["api", "bulk-actions"],
-          "query": [
+      "name": "Bulk Actions",
+      "description": "APIs for managing bulk actions",
+      "item": [
+        {
+          "name": "List Bulk Actions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions?accountId={{account_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{account_id}}",
+                  "description": "Account ID to filter bulk actions"
+                }
+              ]
+            },
+            "description": "Get all bulk actions for a specific account"
+          },
+          "response": [
             {
-              "key": "accountId",
-              "value": "{{accountId}}"
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions?accountId=acc123"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "id": "action123",
+                  "accountId": "acc123",
+                  "status": "COMPLETED",
+                  "createdAt": "2024-03-20T10:00:00Z",
+                  "updatedAt": "2024-03-20T10:05:00Z",
+                  "totalEntities": 1000,
+                  "processedEntities": 1000,
+                  "failedEntities": 0
+                }
+              ]
             }
           ]
-        }
-      }
-    },
-    {
-      "name": "Create Bulk Action",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"accountId\": \"{{accountId}}\",\n  \"entityIds\": [\"{{entityId1}}\", \"{{entityId2}}\"],\n  \"fieldsToUpdate\": {\n    \"name\": \"Updated Name\",\n    \"email\": \"updated@example.com\",\n    \"status\": \"active\"\n  }\n}"
         },
-        "url": {
-          "raw": "{{base_url}}/api/bulk-actions",
-          "host": ["{{base_url}}"],
-          "path": ["api", "bulk-actions"]
-        }
-      }
-    },
-    {
-      "name": "Get Bulk Action Status",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}",
-          "host": ["{{base_url}}"],
-          "path": ["api", "bulk-actions", "{{actionId}}"]
-        }
-      }
-    },
-    {
-      "name": "Get Bulk Action Statistics",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}/stats",
-          "host": ["{{base_url}}"],
-          "path": ["api", "bulk-actions", "{{actionId}}", "stats"]
-        }
-      }
-    },
-    {
-      "name": "Get Bulk Action Logs",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/api/bulk-actions/{{actionId}}/logs?page=1&limit=50",
-          "host": ["{{base_url}}"],
-          "path": ["api", "bulk-actions", "{{actionId}}", "logs"],
-          "query": [
+        {
+          "name": "Create Bulk Action (Update)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"accountId\": \"{{account_id}}\",\n    \"actionType\": \"UPDATE\",\n    \"entityIds\": [\"entity1\", \"entity2\", \"entity3\"],\n    \"fieldsToUpdate\": {\n        \"status\": \"active\",\n        \"lastUpdated\": \"2024-03-20\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions"]
+            },
+            "description": "Create a new bulk update action"
+          },
+          "response": [
             {
-              "key": "page",
-              "value": "1"
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"accountId\": \"acc123\",\n    \"actionType\": \"UPDATE\",\n    \"entityIds\": [\"entity1\", \"entity2\"],\n    \"fieldsToUpdate\": {\n        \"status\": \"active\"\n    }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "id": "action123",
+                  "accountId": "acc123",
+                  "status": "PENDING",
+                  "createdAt": "2024-03-20T10:00:00Z",
+                  "totalEntities": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Create Bulk Action (Insert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"accountId\": \"{{account_id}}\",\n    \"actionType\": \"INSERT\",\n    \"entities\": [\n        {\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"status\": \"active\"\n        },\n        {\n            \"firstName\": \"Jane\",\n            \"lastName\": \"Smith\",\n            \"email\": \"jane.smith@example.com\",\n            \"status\": \"pending\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions"]
+            },
+            "description": "Create a new bulk insert action"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"accountId\": \"acc123\",\n    \"actionType\": \"INSERT\",\n    \"entities\": [\n        {\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"email\": \"john.doe@example.com\"\n        }\n    ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "id": "action123",
+                  "accountId": "acc123",
+                  "status": "PENDING",
+                  "createdAt": "2024-03-20T10:00:00Z",
+                  "totalEntities": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upload Bulk Action File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "accountId",
+                  "value": "{{account_id}}",
+                  "type": "text",
+                  "description": "Account ID"
+                },
+                {
+                  "key": "actionType",
+                  "value": "insert",
+                  "type": "text",
+                  "description": "Action type (update/insert)"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/your/file.json",
+                  "description": "JSON file containing entities. Only .json files are supported."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions", "upload"]
+            },
+            "description": "Upload a JSON file for bulk processing. Only JSON files are supported."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "accountId",
+                      "value": "acc123",
+                      "type": "text"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "UPDATE",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/upload"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "id": "action123",
+                  "accountId": "acc123",
+                  "status": "PENDING",
+                  "createdAt": "2024-03-20T10:00:00Z",
+                  "totalEntities": 1000,
+                  "fileInfo": {
+                    "name": "contacts.json",
+                    "size": 102400,
+                    "type": "application/json",
+                    "rowCount": 1000
+                  }
+                }
+              ]
             },
             {
-              "key": "limit",
-              "value": "50"
+              "name": "Invalid File Type",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "accountId",
+                      "value": "acc123",
+                      "type": "text"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "UPDATE",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/upload"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "error": "Only JSON files are supported",
+                  "details": "Please upload a file with .json extension"
+                }
+              ]
+            },
+            {
+              "name": "Invalid JSON Format",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "accountId",
+                      "value": "acc123",
+                      "type": "text"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "UPDATE",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/upload"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "error": "Invalid JSON format",
+                  "details": "The uploaded file contains invalid JSON syntax"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Get Bulk Action Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions/{{action_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions", "{{action_id}}"]
+            },
+            "description": "Get the status of a specific bulk action"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/action123"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "id": "action123",
+                  "accountId": "acc123",
+                  "status": "IN_PROGRESS",
+                  "createdAt": "2024-03-20T10:00:00Z",
+                  "updatedAt": "2024-03-20T10:01:00Z",
+                  "totalEntities": 1000,
+                  "processedEntities": 500,
+                  "failedEntities": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Get Bulk Action Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions/{{action_id}}/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions", "{{action_id}}", "stats"]
+            },
+            "description": "Get detailed statistics for a bulk action"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/action123/stats"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "totalEntities": 1000,
+                  "processedEntities": 1000,
+                  "successfulEntities": 980,
+                  "failedEntities": 20,
+                  "averageProcessingTime": 150,
+                  "startTime": "2024-03-20T10:00:00Z",
+                  "endTime": "2024-03-20T10:05:00Z",
+                  "errorDistribution": {
+                    "validation_error": 10,
+                    "timeout_error": 5,
+                    "other_error": 5
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Get Bulk Action Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bulk-actions/{{action_id}}/logs?page=1&limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bulk-actions", "{{action_id}}", "logs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Number of records per page (default: 50)"
+                }
+              ]
+            },
+            "description": "Get detailed logs for a bulk action"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/bulk-actions/action123/logs?page=1&limit=50"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": [
+                {
+                  "logs": [
+                    {
+                      "entityId": "entity1",
+                      "status": "SUCCESS",
+                      "timestamp": "2024-03-20T10:00:01Z",
+                      "message": "Entity updated successfully"
+                    },
+                    {
+                      "entityId": "entity2",
+                      "status": "FAILED",
+                      "timestamp": "2024-03-20T10:00:02Z",
+                      "message": "Validation error: Invalid field value",
+                      "error": {
+                        "code": "VALIDATION_ERROR",
+                        "details": "Field 'status' must be one of: active, inactive, pending"
+                      }
+                    }
+                  ],
+                  "pagination": {
+                    "total": 1000,
+                    "page": 1,
+                    "limit": 50,
+                    "totalPages": 20
+                  }
+                }
+              ]
             }
           ]
         }
-      }
+      ]
     }
   ],
   "variable": [
     {
       "key": "base_url",
-      "value": "http://localhost:3000"
+      "value": "http://localhost:3000",
+      "type": "string"
     },
     {
-      "key": "accountId",
-      "value": "your-account-id"
+      "key": "account_id",
+      "value": "acc123",
+      "type": "string"
     },
     {
-      "key": "actionId",
-      "value": "your-action-id"
-    },
-    {
-      "key": "entityId1",
-      "value": "entity-id-1"
-    },
-    {
-      "key": "entityId2",
-      "value": "entity-id-2"
+      "key": "action_id",
+      "value": "action123",
+      "type": "string"
     }
   ]
 } 

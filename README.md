@@ -51,24 +51,83 @@ REDIS_URI=redis://localhost:6379
 RABBITMQ_URI=amqp://localhost
 ```
 
-4. Start the services:
+## Running with Docker
+
+1. **Build and Start Containers**
 ```bash
-# Start MongoDB, Redis, and RabbitMQ
-# Using Docker (recommended):
+# Build the containers
+docker-compose build
+
+# Start all services
 docker-compose up -d
-
-# Or start them individually
 ```
 
-5. Start the application:
+2. **View Logs**
 ```bash
-# Development
-npm run dev
+# View all container logs
+docker-compose logs -f
 
-# Production
-npm run build
-npm start
+# View specific service logs
+docker-compose logs -f app
 ```
+
+3. **Stop Services**
+```bash
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
+```
+
+4. **Restart Services**
+```bash
+# Restart all services
+docker-compose restart
+
+# Restart specific service
+docker-compose restart app
+```
+
+5. **Check Service Status**
+```bash
+# List all containers
+docker-compose ps
+
+# Check specific service
+docker-compose ps app
+```
+
+## Generating Dummy Data
+
+1. **Install Required Packages**
+```bash
+npm install @faker-js/faker
+```
+
+2. **Generate Contact Data**
+```bash
+# Generate 200,000 contacts (default) you can change number inside script
+node src/generateData.js
+
+
+```
+
+The generated data will be saved in `generatedContacts.csv` with the following fields:
+- entityId
+- status
+- firstName
+- lastName
+- email
+- phone
+- company
+- title
+- lastUpdated
+
+3. **Using Generated Data**
+- The CSV file can be used with the bulk upload API
+- Data is formatted for direct use with the platform
+- Each record contains realistic dummy data
 
 ## API Endpoints
 

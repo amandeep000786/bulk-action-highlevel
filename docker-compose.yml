@@ -55,7 +55,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - uploads-data:/usr/src/app/uploads
+      - ./uploads:/usr/src/app/uploads
     environment:
       - PORT=3000
       - MONGODB_URI=mongodb://mongo:27017/crmdb
@@ -77,4 +77,3 @@ networks:
 volumes:
   mongo-data:
   redis-data:
-  uploads-data:
